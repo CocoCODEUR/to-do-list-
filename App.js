@@ -30,24 +30,52 @@ let RecoverPriorite = null;
 let prioriteStorage = [];
 let prioriteAssembler = "";
 let i = 0;
+
+let once = true;
+
 LoadStorage();
+
 //check local storage
 function LoadStorage() {
   if (localStorage) {
     if (localStorage.getItem("priorite")) {
+      once = localStorage.getItem("recover_check");
       RecoverPriorite = localStorage.getItem("priorite");
+
+      i = parseInt(localStorage.getItem("task_number_priority"));
 
       for (let a = 0; a < RecoverPriorite.length; a++) {
         if (RecoverPriorite[a] === "," || a + 1 === RecoverPriorite.length) {
           let recoverTask = document.createElement("li");
           priorite.appendChild(recoverTask);
-          recoverTask.textContent = prioriteAssembler;
+          if (a + 1 === RecoverPriorite.length) {
+            recoverTask.textContent = prioriteAssembler + RecoverPriorite[a];
+          } else {
+            recoverTask.textContent = prioriteAssembler;
+          }
 
+          if (once === true) {
+            i += 1;
+          }
+          if (i > 0) {
+            for (let j = 0; j < i; j++) {
+              if (a + 1 === RecoverPriorite.length) {
+                prioriteStorage[j] = prioriteAssembler + RecoverPriorite[a];
+                console.log(prioriteStorage);
+              } else {
+                prioriteStorage[j] = prioriteAssembler;
+                console.log(prioriteStorage);
+              }
+            }
+          }
           prioriteAssembler = "";
         } else {
           prioriteAssembler += RecoverPriorite[a];
         }
       }
+
+      once = false;
+      localStorage.setItem("recover_check", once);
       //result
     }
   } else {
@@ -69,10 +97,12 @@ function AddTask() {
   if (task_level === "select_priority") {
     let task = document.createElement("li");
     priorite.appendChild(task);
-    task.textContent = task_text;
-    prioriteStorage[i] = task_text; // el problème esta aqui !
-    i += 1;
 
+    task.textContent = task_text;
+
+    prioriteStorage[i] = task_text;
+    i += 1;
+    localStorage.setItem("task_number_priority", i);
     localStorage.setItem("priorite", prioriteStorage);
   }
   // Création de la task   si ok_tiers
