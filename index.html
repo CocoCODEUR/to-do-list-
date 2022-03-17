@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>best to do list</title>
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <input type="date" name="" id="" value="" />
@@ -19,14 +20,25 @@
       chill :
     </ul>
 
-    <input id="input_text" type="text" placeholder="task" />
-    <select name="" id="select_option">
-      <option value="">choisis t'as priorité</option>
-      <option value="select_priority">priorité</option>
-      <option value="select_ok_tiers">ok tiers</option>
-      <option value="select_chill">chill</option>
+    <input
+      class="select-option"
+      id="input_text"
+      type="text"
+      placeholder="Task"
+    />
+    <select class="select-option" name="" id="select_option">
+      <option class="task" value="">Choisis t'as priorité</option>
+      <option value="select_priority">Priorité</option>
+      <option value="select_ok_tiers">Ok tiers</option>
+      <option value="select_chill">Chill</option>
     </select>
-    <input type="submit" name="" id="input_submit" value="Ajouter une task" />
+    <input
+      class="btn-submit"
+      type="submit"
+      name=""
+      id="input_submit"
+      value="Ajouter une task"
+    />
 
     <script src="App.js"></script>
   </body>

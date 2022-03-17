@@ -1,0 +1,56 @@
+body {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.select-option {
+  border-radius: 10px;
+  border: solid 5px black;
+  margin: 1em;
+  margin-left: 20em;
+  margin-right: 20em;
+  text-align: center;
+  background-color: black;
+  color: white;
+  padding: 1em;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 20px;
+}
+.select-option:hover {
+  color: black;
+
+  background-color: white;
+}
+.task {
+  border-radius: 10px;
+  border: solid 5px black;
+  margin: 1em;
+  margin-left: 20em;
+  margin-right: 20em;
+  text-align: center;
+  background-color: white;
+  color: white;
+  padding: 1em;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 20px;
+}
+.btn-submit {
+  border-radius: 10px;
+  border: solid 5px red;
+  margin: 1em;
+  margin-left: 20em;
+  margin-right: 20em;
+  text-align: center;
+
+  padding: 1em;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 20px;
+  background-color: red;
+  color: white;
+  font-style: bold;
+}
+.btn-submit:hover {
+  background-color: white;
+  color: red;
+}

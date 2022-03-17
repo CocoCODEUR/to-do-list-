@@ -30,7 +30,7 @@ let RecoverPriorite = null;
 let prioriteStorage = [];
 let prioriteAssembler = "";
 let i = 0;
-
+let j = 0;
 let once = true;
 
 LoadStorage();
@@ -50,37 +50,42 @@ function LoadStorage() {
           priorite.appendChild(recoverTask);
           if (a + 1 === RecoverPriorite.length) {
             recoverTask.textContent = prioriteAssembler + RecoverPriorite[a];
+            prioriteStorage[j] = prioriteAssembler + RecoverPriorite[a];
+            j += 1;
           } else {
             recoverTask.textContent = prioriteAssembler;
+            prioriteStorage[j] = prioriteAssembler;
+            j += 1;
           }
 
           if (once === true) {
             i += 1;
           }
-          if (i > 0) {
+
+          /*if (i > 0) {
             for (let j = 0; j < i; j++) {
               if (a + 1 === RecoverPriorite.length) {
                 prioriteStorage[j] = prioriteAssembler + RecoverPriorite[a];
-                console.log(prioriteStorage);
               } else {
                 prioriteStorage[j] = prioriteAssembler;
-                console.log(prioriteStorage);
               }
             }
-          }
+          }*/
+
           prioriteAssembler = "";
         } else {
           prioriteAssembler += RecoverPriorite[a];
         }
-      }
 
-      once = false;
-      localStorage.setItem("recover_check", once);
-      //result
+        once = false;
+
+        localStorage.setItem("recover_check", once);
+        //result
+      }
+    } else {
+      return;
+      console.log("ya r dans le stockage chef");
     }
-  } else {
-    return;
-    console.log("ya r dans le stockage chef");
   }
 }
 
