@@ -1,5 +1,5 @@
 // Date de aujourd'hui de base
-let Date_input = document.querySelector('input[type ="date"]');
+let Date_input = document.querySelector('input[type="date"]');
 let Today_date = new Date();
 let month = Today_date.getMonth();
 let date = Today_date.getDate();
@@ -11,7 +11,7 @@ Date_input.value = Today_date.getFullYear() + "-" + month + "-" + date;
 
 // Catégorie de priorité
 let priorite = document.querySelector("#priority");
-let ok_tiers = document.querySelector("#OkTiers");
+let okTiers = document.querySelector("#OkTiers");
 let chill = document.querySelector("#chill");
 
 // Creation priorité
@@ -25,68 +25,71 @@ let task_level = "";
 input_submit.addEventListener("click", AddTask);
 
 //Local storage
-
-let RecoverPriorite = null;
+//Priorite_Storage
+let RecoverPriorite = [];
 let prioriteStorage = [];
-let prioriteAssembler = "";
-let i = 0;
-let j = 0;
-let once = true;
+//OkTiers_storage
+let RecoverOkTiers = [];
+let okTierStorage = [];
+//Chill Storage
+let recoverChill = [];
+let chillStorage = [];
 
-LoadStorage();
+//local storage check
+if (localStorage) {
+  if (localStorage.getItem("priorite")) {
+    RecoverPriorite = localStorage.getItem("priorite").split(",");
 
-//check local storage
-function LoadStorage() {
-  if (localStorage) {
-    if (localStorage.getItem("priorite")) {
-      once = localStorage.getItem("recover_check");
-      RecoverPriorite = localStorage.getItem("priorite");
+    RecoverPriorite.forEach((task, index) => {
+      // Analyse du tableau
+      let RecoverTask = document.createElement("li");
+      priorite.appendChild(RecoverTask);
+      RecoverTask.textContent = task;
 
-      i = parseInt(localStorage.getItem("task_number_priority"));
-
-      for (let a = 0; a < RecoverPriorite.length; a++) {
-        if (RecoverPriorite[a] === "," || a + 1 === RecoverPriorite.length) {
-          let recoverTask = document.createElement("li");
-          priorite.appendChild(recoverTask);
-          if (a + 1 === RecoverPriorite.length) {
-            recoverTask.textContent = prioriteAssembler + RecoverPriorite[a];
-            prioriteStorage[j] = prioriteAssembler + RecoverPriorite[a];
-            j += 1;
-          } else {
-            recoverTask.textContent = prioriteAssembler;
-            prioriteStorage[j] = prioriteAssembler;
-            j += 1;
-          }
-
-          if (once === true) {
-            i += 1;
-          }
-
-          /*if (i > 0) {
-            for (let j = 0; j < i; j++) {
-              if (a + 1 === RecoverPriorite.length) {
-                prioriteStorage[j] = prioriteAssembler + RecoverPriorite[a];
-              } else {
-                prioriteStorage[j] = prioriteAssembler;
-              }
-            }
-          }*/
-
-          prioriteAssembler = "";
-        } else {
-          prioriteAssembler += RecoverPriorite[a];
-        }
-
-        once = false;
-
-        localStorage.setItem("recover_check", once);
-        //result
-      }
-    } else {
-      return;
-      console.log("ya r dans le stockage chef");
-    }
+      RecoverTask.addEventListener("click", () => {
+        RecoverTask.remove();
+        prioriteStorage.splice(index, 1);
+        localStorage.setItem("priorite", prioriteStorage);
+      });
+      prioriteStorage.push(task);
+    });
   }
+  if (localStorage.getItem("OkTiers")) {
+    RecoverOkTiers = localStorage.getItem("OkTiers").split(",");
+
+    RecoverOkTiers.forEach((task, index) => {
+      let RecoverTask = document.createElement("li");
+      okTiers.appendChild(RecoverTask);
+      RecoverTask.textContent = task;
+
+      RecoverTask.addEventListener("click", () => {
+        RecoverTask.remove();
+        okTierStorage.splice(index, 1);
+        localStorage.setItem("OkTiers", okTierStorage);
+      });
+
+      okTierStorage.push(task);
+    });
+  }
+  if (localStorage.getItem("chill")) {
+    recoverChill = localStorage.getItem("chill").split(",");
+
+    recoverChill.forEach((task, index) => {
+      let recoverTask = document.createElement("li");
+      chill.appendChild(recoverTask);
+      recoverTask.textContent = task;
+
+      recoverTask.addEventListener("click", () => {
+        console.log(index);
+        recoverTask.remove();
+        chillStorage.splice(index, 1);
+        localStorage.setItem("chill", chillStorage);
+      });
+      chillStorage.push(task);
+    });
+  }
+} else {
+  console.log("ya r dans le stockage chef");
 }
 
 function AddTask() {
@@ -104,24 +107,44 @@ function AddTask() {
     priorite.appendChild(task);
 
     task.textContent = task_text;
+    //local storage
 
-    prioriteStorage[i] = task_text;
-    i += 1;
-    localStorage.setItem("task_number_priority", i);
+    prioriteStorage.push(task_text);
+    task.addEventListener("click", () => {
+      task.remove();
+      prioriteStorage.splice(prioriteStorage.length - 1, 1);
+      localStorage.setItem("priorite", prioriteStorage);
+    });
     localStorage.setItem("priorite", prioriteStorage);
   }
+
   // Création de la task   si ok_tiers
   if (task_level === "select_ok_tiers") {
     let task = document.createElement("li");
-    ok_tiers.appendChild(task);
+    okTiers.appendChild(task);
     task.textContent = task_text;
+    okTierStorage.push(task_text);
+
+    task.addEventListener("click", () => {
+      task.remove();
+      okTierStorage.splice(okTierStorage.length - 1, 1);
+      localStorage.setItem("OkTiers", okTierStorage);
+    });
+
+    localStorage.setItem("OkTiers", okTierStorage);
   }
   // Création de la task   si chill
   if (task_level === "select_chill") {
     let task = document.createElement("li");
     chill.appendChild(task);
     task.textContent = task_text;
+    chillStorage.push(task_text);
+
+    task.addEventListener("click", () => {
+      task.remove();
+      chillStorage.splice(chillStorage.length - 1, 1);
+      localStorage.setItem("chill", chillStorage);
+    });
+    localStorage.setItem("chill", chillStorage);
   }
 }
-
-// Locale Storage
